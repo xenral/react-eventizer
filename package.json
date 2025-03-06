@@ -1,6 +1,6 @@
 {
     "name": "react-eventizer",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "A lightweight React event bus with full TypeScript support",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
         "test": "jest",
         "lint": "eslint src --ext .ts,.tsx",
         "prepublishOnly": "npm run build",
-        "version": "npm run build && git add -A dist",
+        "version": "npm run build",
         "postversion": "git push && git push --tags"
     },
     "repository": {
