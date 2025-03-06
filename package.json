@@ -36,13 +36,15 @@
         "react": ">=16.8.0"
     },
     "devDependencies": {
+        "@eslint/config-array": "^0.19.2",
+        "@eslint/object-schema": "^2.1.6",
         "@testing-library/jest-dom": "^6.6.3",
         "@testing-library/react": "^16.2.0",
         "@types/jest": "^29.5.0",
         "@types/react": "^18.0.0",
-        "eslint": "^8.56.0",
         "@typescript-eslint/eslint-plugin": "^7.0.0",
         "@typescript-eslint/parser": "^7.0.0",
+        "eslint": "^8.56.0",
         "glob": "^10.3.10",
         "jest": "^29.7.0",
         "jest-environment-jsdom": "^29.7.0",
@@ -54,6 +56,10 @@
     },
     "overrides": {
         "glob": "^10.3.10",
-        "rimraf": "^5.0.5"
+        "rimraf": "^5.0.5",
+        "domexception": "^4.0.0",
+        "abab": "^2.0.6",
+        "@humanwhocodes/config-array": "@eslint/config-array@^0.19.2",
+        "@humanwhocodes/object-schema": "@eslint/object-schema@^2.1.6"
     }
 }
