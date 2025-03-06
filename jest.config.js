@@ -19,4 +19,11 @@ module.exports = {
         },
     },
     setupFilesAfterEnv: [],
+    coverageReporters: ['text', 'lcov'],
+    testPathIgnorePatterns: ['/node_modules/'],
+    transform: {
+        '^.+\\.(ts|tsx)$': ['ts-jest', {
+            tsconfig: 'tsconfig.json',
+        }],
+    },
 };
