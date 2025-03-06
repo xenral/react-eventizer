@@ -53,13 +53,5 @@
         "rimraf": "^5.0.5",
         "ts-jest": "^29.1.2",
         "typescript": "^5.3.3"
-    },
-    "overrides": {
-        "glob": "^10.3.10",
-        "rimraf": "^5.0.5",
-        "domexception": "^4.0.0",
-        "abab": "^2.0.6",
-        "@humanwhocodes/config-array": "@eslint/config-array@^0.19.2",
-        "@humanwhocodes/object-schema": "@eslint/object-schema@^2.1.6"
     }
 }

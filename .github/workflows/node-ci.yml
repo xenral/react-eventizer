@@ -2,10 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ master ]
-
+    branches: [ main, master ]
 
 jobs:
   build:
@@ -21,6 +20,12 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
+    - name: Install dependencies
+      run: |
+        if [ "${{ matrix.node-version }}" = "14.x" ]; then
+          npm install --no-package-lock
+        else
+          npm ci
+        fi
     - run: npm run build --if-present
     - run: npm test
