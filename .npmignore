@@ -1,0 +1,29 @@
+# Source files
+src/
+examples/
+tests/
+
+# Configuration files
+.github/
+.vscode/
+.eslintrc
+.prettierrc
+tsconfig.json
+jest.config.js
+cspell.json
+
+# Git files
+.git/
+.gitignore
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea/
+*.swp
+*.swo
+.DS_Store

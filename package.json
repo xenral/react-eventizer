@@ -11,7 +11,13 @@
         "build": "tsc",
         "test": "jest",
         "lint": "eslint src --ext .ts,.tsx",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm run build",
+        "version": "npm run build && git add -A dist",
+        "postversion": "git push && git push --tags"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/yourusername/react-eventizer.git"
     },
     "keywords": [
         "react",
@@ -22,6 +28,10 @@
     ],
     "author": "",
     "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/yourusername/react-eventizer/issues"
+    },
+    "homepage": "https://github.com/yourusername/react-eventizer#readme",
     "peerDependencies": {
         "react": ">=16.8.0"
     },
