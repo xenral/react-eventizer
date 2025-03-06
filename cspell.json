@@ -1,0 +1,17 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Eventizer",
+    "eventizer",
+    "pubsub",
+    "unsubscribe"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "coverage/**",
+    "*.lock",
+    "package-lock.json"
+  ]
+} 
