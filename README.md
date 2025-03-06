@@ -167,6 +167,103 @@ const emitLogin = useEmitter('user:login');
 emitLogin({ username: 'john', id: 123 });
 ```
 
+## When to Use an Event Bus vs. State Management
+
+While state management libraries like Redux, Zustand, or Context API are powerful tools for managing application state, an event bus offers distinct advantages in certain scenarios. Here are situations where react-eventizer shines:
+
+### 1. Cross-Component Communication Without Prop Drilling
+
+**Problem**: Components need to communicate across different parts of the component tree without direct parent-child relationships.
+
+**Solution**: An event bus allows any component to emit events that can be received by any other component, regardless of their position in the component tree.
+
+```tsx
+// In a deeply nested component
+const DeleteButton = () => {
+  const emitDelete = useEmitter('item:delete');
+  return <button onClick={() => emitDelete(itemId)}>Delete</button>;
+};
+
+// In a completely different part of the app
+const Notifications = () => {
+  useSubscribe('item:delete', (itemId) => {
+    showNotification(`Item ${itemId} deleted successfully`);
+  });
+  // ...
+};
+```
+
+### 2. Decoupled Component Architecture
+
+**Problem**: Tightly coupled components make code harder to maintain and test.
+
+**Solution**: An event bus promotes loose coupling by allowing components to communicate without direct dependencies.
+
+### 3. Notification and Alert Systems
+
+**Problem**: Notifications need to be triggered from anywhere in the app but displayed in a central component.
+
+**Solution**: Components can emit notification events that are handled by a central notification manager.
+
+```tsx
+// Any component can trigger a notification
+const saveData = async () => {
+  try {
+    await api.save(data);
+    emitNotification({ type: 'success', message: 'Data saved successfully' });
+  } catch (error) {
+    emitNotification({ type: 'error', message: 'Failed to save data' });
+  }
+};
+
+// Notification component listens for all notifications
+const NotificationCenter = () => {
+  const [notifications, setNotifications] = useState([]);
+  
+  useSubscribe('notification:new', (notification) => {
+    setNotifications(prev => [...prev, notification]);
+  });
+  
+  // Render notifications...
+};
+```
+
+### 4. Global UI State Changes
+
+**Problem**: UI changes like theme switching or sidebar toggling need to affect multiple components.
+
+**Solution**: Emit a single event that all interested components can subscribe to.
+
+### 5. Handling Asynchronous Events
+
+**Problem**: Managing asynchronous events like WebSocket messages or long-polling updates.
+
+**Solution**: Emit events when async data arrives, allowing any component to react accordingly.
+
+```tsx
+// WebSocket service
+socket.onMessage((data) => {
+  eventBus.emit('socket:message', data);
+});
+
+// Any component can listen
+const LiveUpdates = () => {
+  useSubscribe('socket:message', (data) => {
+    // Update component based on socket data
+  });
+  // ...
+};
+```
+
+### 6. When to Stick with State Management
+
+While an event bus is powerful, traditional state management might be better when:
+
+- You need to persist and access state across the entire application
+- You require time-travel debugging or state snapshots
+- Your application has complex state transitions and validations
+- You need middleware for side effects (though you can build this with an event bus too)
+
 ## Advanced Usage
 
 ### Custom Event Maps
