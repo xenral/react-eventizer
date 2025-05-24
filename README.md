@@ -32,6 +32,7 @@ export interface EventMap extends BaseEventMap {
   'theme:change': 'light' | 'dark';
   'modal:close': void;
 }
+// `BaseEventMap` is intentionally empty so you can define your own events.
 ```
 
 ### 2. Set up the provider
@@ -278,6 +279,7 @@ export interface EventMap extends BaseEventMap {
   'cart:remove': { productId: string };
   'cart:clear': void;
 }
+// `BaseEventMap` has no predefined events.
 ```
 
 ### Using with Multiple Event Buses

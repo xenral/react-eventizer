@@ -2,15 +2,7 @@
  * EventMap interface to be extended by users of the library.
  * Keys are event names and values are payload types.
  */
-export interface EventMap {
-  // Example events:
-  'user:login': { username: string };
-  'user:logout': void;
-  // Test events:
-  'test:event': string;
-  'test:counter': number;
-  // Extend with more events as needed.
-}
+export interface EventMap {}
 
 /**
  * Core event bus class that manages subscriptions and event emissions.
