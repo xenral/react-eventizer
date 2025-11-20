@@ -12,7 +12,7 @@ type EventizerContextValue<EM extends Record<string, any> = any> = {
  * React context for the Eventizer instance.
  * Uses a generic type parameter to allow for custom event maps.
  */
-const EventizerContext = createContext<EventizerContextValue | null>(null);
+const EventizerContext = createContext<EventizerContextValue<any> | null>(null);
 
 /**
  * Props for the EventizerProvider component.
@@ -58,21 +58,22 @@ export const useEventizer = <EM extends Record<string, any> = EventMap>(): Event
 
 /**
  * Hook to subscribe to an event and automatically unsubscribe on component unmount.
+ * The EventMap type is automatically inferred from module augmentation.
  * 
  * @param event - The event name to subscribe to
  * @param callback - The callback function to be called when the event is emitted
  * @param deps - Optional dependency array for the callback (similar to useEffect deps)
  */
-export function useSubscribe<K extends string>(
+export function useSubscribe<K extends keyof EventMap>(
   event: K,
-  callback: (payload: any) => void,
+  callback: (payload: EventMap[K]) => void,
   deps: any[] = []
 ): void {
-  const bus = useEventizer();
+  const bus = useEventizer<EventMap>();
   
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const unsubscribe = bus.on(event as any, callback);
+    const unsubscribe = bus.on(event, callback);
     return () => {
       unsubscribe();
     };
@@ -81,13 +82,14 @@ export function useSubscribe<K extends string>(
 
 /**
  * Hook to create an event emitter function for a specific event.
+ * The EventMap type is automatically inferred from module augmentation.
  * 
  * @param event - The event name to create an emitter for
  * @returns A function that emits the event with the provided payload
  */
-export function useEmitter<K extends string>(
+export function useEmitter<K extends keyof EventMap>(
   event: K
-): (payload?: any) => void {
-  const bus = useEventizer();
-  return (payload?: any) => bus.emit(event as any, payload === undefined ? undefined : payload);
+): (payload: EventMap[K]) => void {
+  const bus = useEventizer<EventMap>();
+  return (payload: EventMap[K]) => bus.emit(event, payload);
 } 

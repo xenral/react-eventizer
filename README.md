@@ -66,6 +66,7 @@ const UserProfile: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   
   // Subscribe to the user:login event
+  // ✅ payload is automatically typed as { username: string; id: number }
   useSubscribe('user:login', (payload) => {
     setUsername(payload.username);
   });
@@ -87,6 +88,7 @@ import { useEmitter } from 'react-eventizer';
 
 const LoginForm: React.FC = () => {
   const [username, setUsername] = useState('');
+  // ✅ emitLogin is automatically typed as (payload: { username: string; id: number }) => void
   const emitLogin = useEmitter('user:login');
   
   const handleLogin = () => {
@@ -106,6 +108,25 @@ const LoginForm: React.FC = () => {
   );
 };
 ```
+
+## Type Safety
+
+One of the key benefits of `react-eventizer` is **automatic type inference**. Once you define your `EventMap` and pass it to the `EventizerProvider`, all hooks (`useEmitter` and `useSubscribe`) automatically infer the correct payload types without requiring you to specify generics again.
+
+```tsx
+// ✅ Simple and type-safe - no generics needed!
+const emitLogin = useEmitter('user:login');
+emitLogin({ username: 'john', id: 123 }); // ✅ Correct
+emitLogin({ username: 'john' }); // ❌ TypeScript error: Property 'id' is missing
+
+useSubscribe('user:login', (payload) => {
+  // payload is automatically typed as { username: string; id: number }
+  console.log(payload.username); // ✅ TypeScript knows this is a string
+  console.log(payload.id); // ✅ TypeScript knows this is a number
+});
+```
+
+This provides an excellent developer experience - you define your event types once, and TypeScript handles the rest!
 
 ## API Reference
 
