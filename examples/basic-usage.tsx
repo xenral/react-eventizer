@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import { Eventizer, EventizerProvider, useSubscribe, useEmitter } from '../src';
 
+enum AppEvent {
+  CounterIncrement = 'counter:increment',
+  CounterReset = 'counter:reset',
+  MessageSend = 'message:send',
+}
+
 // Define our custom event map
 interface AppEventMap {
-  'counter:increment': number;
-  'counter:reset': void;
-  'message:send': { text: string; sender: string };
+  [AppEvent.CounterIncrement]: number;
+  [AppEvent.CounterReset]: void;
+  [AppEvent.MessageSend]: { text: string; sender: string };
+}
+
+declare module '../src' {
+  interface EventMap extends AppEventMap {}
 }
 
 // Create an event bus instance with our custom event map
@@ -16,12 +26,12 @@ const Counter: React.FC = () => {
   const [count, setCount] = useState(0);
   
   // Subscribe to counter:increment event
-  useSubscribe('counter:increment', (incrementBy: number) => {
+  useSubscribe(AppEvent.CounterIncrement, (incrementBy) => {
     setCount(prev => prev + incrementBy);
   });
   
   // Subscribe to counter:reset event
-  useSubscribe('counter:reset', () => {
+  useSubscribe(AppEvent.CounterReset, () => {
     setCount(0);
   });
   
@@ -37,7 +47,7 @@ const MessageList: React.FC = () => {
   const [messages, setMessages] = useState<Array<{ text: string; sender: string }>>([]);
   
   // Subscribe to message:send event
-  useSubscribe('message:send', (message: { text: string; sender: string }) => {
+  useSubscribe(AppEvent.MessageSend, (message) => {
     setMessages(prev => [...prev, message]);
   });
   
@@ -60,9 +70,9 @@ const Controls: React.FC = () => {
   const [messageText, setMessageText] = useState('');
   
   // Get emitter functions
-  const emitIncrement = useEmitter('counter:increment');
-  const emitReset = useEmitter('counter:reset');
-  const emitMessage = useEmitter('message:send');
+  const emitIncrement = useEmitter(AppEvent.CounterIncrement);
+  const emitReset = useEmitter(AppEvent.CounterReset);
+  const emitMessage = useEmitter(AppEvent.MessageSend);
   
   const handleSendMessage = () => {
     if (messageText.trim()) {

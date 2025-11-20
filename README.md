@@ -1,6 +1,12 @@
 # react-eventizer
 
+[![npm version](https://img.shields.io/npm/v/react-eventizer.svg?style=flat-square)](https://www.npmjs.com/package/react-eventizer)
+[![npm downloads](https://img.shields.io/npm/dm/react-eventizer.svg?style=flat-square)](https://www.npmjs.com/package/react-eventizer)
+
 A lightweight, zero-dependency React event bus with full TypeScript support. Enables decoupled component communication using a pub/sub model.
+
+- **Package**: [`react-eventizer` on npm](https://www.npmjs.com/package/react-eventizer)
+- **Latest version**: ![npm](https://img.shields.io/npm/v/react-eventizer.svg)
 
 ## Features
 
